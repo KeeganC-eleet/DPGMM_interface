@@ -1,7 +1,7 @@
 # Market Regime Analysis: AMD
 
 > **Automated Quantitative Intelligence Report**  
-> **Generated:** 2026-10-27 14:37:26 | **Project Directory:** `generations/AMD_2025-10-27_2026-10-27_gaussian_m3`
+> **Generated:** 2026-10-27 14:58:27 | **Project Directory:** `generations/AMD_2025-10-27_2026-10-27_fat_m3_s2`
 
 ---
 
@@ -13,25 +13,26 @@
 | **Analysis Range** | `2025-10-27` to `2026-10-27` |
 | **Total Trading Observations** | `1,700` periods |
 | **Asset Profile** | Single stock |
-| **Model Framework** | Dirichlet Process Gaussian Mixture Model (DPGMM) |
+| **Model Framework** | Student's t-Mixture Model (PyMC Fat Tails) |
 | **Prior Upper Bound Regimes** | `3` |
 | **Weight Concentration Prior (γ)** | `0.001` |
+| **Regime Switching Cost** | `2` nats |
 | **Active Regimes Discovered** | **`3` regimes** |
 | **Latest Trading Date** | `2026-10-26` |
 | **Latest Asset Price** | `$531.47` |
-| **Current Identified Regime** | **Regime 0** |
+| **Current Identified Regime** | **Regime 1** |
 
 ---
 
 ## 2. Current Market Outlook & Transition Forecast
 
-As of **2026-10-26**, `AMD` is operating in **Regime 0**.
+As of **2026-10-26**, `AMD` is operating in **Regime 1**.
 
-- **Regime Stability:** There is a **88.18%** probability that the asset remains in **Regime 0** tomorrow.
+- **Regime Stability:** There is a **98.47%** probability that the asset remains in **Regime 1** tomorrow.
 - **Next-Day State Probability Distribution:**
-  - $\rightarrow$ **Regime 0**: `88.18%`
-  - $\rightarrow$ **Regime 1**: `11.50%`
-  - $\rightarrow$ **Regime 2**: `0.32%`
+  - $\rightarrow$ **Regime 0**: `0.56%`
+  - $\rightarrow$ **Regime 1**: `98.47%`
+  - $\rightarrow$ **Regime 2**: `0.98%`
 
 ---
 
@@ -39,9 +40,9 @@ As of **2026-10-26**, `AMD` is operating in **Regime 0**.
 
 | Regime | Trading Days | Frequency (%) | Ann. Return | Ann. Volatility | Sharpe (Rf=0) | Mean Mom (50d) | Yield Spread (10Y-2Y) | Tariff Rate (%) | Regime Characterization |
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
-| **Regime 0** | 1,245 | 73.2% | +23.22% | 26.70% | 0.87 | +1.53% | 0.51% | 2.72% | Bull Market (High Volatility / Momentum Rally) |
-| **Regime 1** | 280 | 16.5% | +405.67% | 156.87% | 2.59 | -2.31% | 0.49% | 2.72% | Bull Market (High Volatility / Momentum Rally) |
-| **Regime 2** | 175 | 10.3% | -54.46% | 36.19% | -1.50 | +3.78% | 0.42% | 2.72% | Bear Market (High Volatility / Sharp Correction) |
+| **Regime 0** | 233 | 13.7% | -684.67% | 94.39% | -7.25 | -3.63% | 0.48% | 2.72% | Bear Market (High Volatility / Sharp Correction) |
+| **Regime 1** | 1,435 | 84.4% | -15.71% | 48.70% | -0.32 | +1.74% | 0.50% | 2.72% | Bear Market (High Volatility / Sharp Correction) |
+| **Regime 2** | 32 | 1.9% | +9845.16% | 152.35% | 64.62 | +8.21% | 0.46% | 2.72% | Bull Market (High Volatility / Momentum Rally) |
 
 > Characterization thresholds (single stock): trending when annualized return is beyond **±10%**, high volatility at **25%+** annualized. Figures annualized from 1,764 bars per year.
 
@@ -52,18 +53,18 @@ As of **2026-10-26**, `AMD` is operating in **Regime 0**.
 
 | Current \ Next | Regime 0 | Regime 1 | Regime 2 |
 | :--- | :---: | :---: | :---: |
-| **Regime 0** | **88.18%** | 11.50% | 0.32% |
-| **Regime 1** | 48.57% | **38.21%** | 13.21% |
-| **Regime 2** | 6.29% | 17.14% | **76.57%** |
+| **Regime 0** | **93.99%** | 2.58% | 3.43% |
+| **Regime 1** | 0.56% | **98.47%** | 0.98% |
+| **Regime 2** | 18.75% | 50.00% | **31.25%** |
 
 
 ### Regime Persistence & Expected Dwell Times
 
 | Regime | Persistence P(S|S) | Expected Duration (Days) | Primary Exit Destination | Exit Prob (%) |
 | :---: | :---: | :---: | :---: | :---: |
-| Regime 0 | 88.18% | 8.5 days | Regime 1 | 11.50% |
-| Regime 1 | 38.21% | 1.6 days | Regime 0 | 48.57% |
-| Regime 2 | 76.57% | 4.3 days | Regime 1 | 17.14% |
+| Regime 0 | 93.99% | 16.6 days | Regime 2 | 3.43% |
+| Regime 1 | 98.47% | 65.2 days | Regime 2 | 0.98% |
+| Regime 2 | 31.25% | 1.5 days | Regime 1 | 50.00% |
 
 
 ---
@@ -83,15 +84,15 @@ As of **2026-10-26**, `AMD` is operating in **Regime 0**.
 
 ## 6. Current Volatility & Options Breakdown
 
-> **Live snapshot** taken 2026-10-27 14:37 · Spot **$531.28** · Expiries within 45 days · Source: Yahoo Finance option chains
+> **Live snapshot** taken 2026-10-27 14:58 · Spot **$531.28** · Expiries within 45 days · Source: Yahoo Finance option chains
 
 ### Key Takeaways
 
-- **Volatility pricing:** Options are **fairly priced** vs. recent movement (IV 60.1% vs. 20d realized 52.7%).
-- **Term structure:** **Flat**: no distinct near-term event priced in.
-- **Expected move:** ±6.1% by 2026-11-02 ($498.78 – $563.78).
-- **Positioning:** Put/call open interest is 1.01 → Defensive (puts dominate). Today's trading put/call volume is 0.68 → Bullish (calls dominate).
-- **Skew:** Upside calls are bid over puts (73.1% vs. 62.8% IV): traders are chasing a rally.
+- **Volatility pricing:** Options are **fairly priced** vs. recent movement (IV 60.6% vs. 20d realized 52.7%).
+- **Term structure:** **Inverted**: near-term stress or an upcoming event (e.g. earnings) is priced in.
+- **Expected move:** ±6.2% by 2026-11-02 ($498.40 – $564.15).
+- **Positioning:** Put/call open interest is 1.01 → Defensive (puts dominate). Today's trading put/call volume is 0.65 → Bullish (calls dominate).
+- **Skew:** Upside calls are bid over puts (73.9% vs. 62.5% IV): traders are chasing a rally.
 - **Where the bets sit:** Call open interest clusters **far above spot** and put open interest clusters **far below spot**. Large far-from-spot clusters usually reflect hedges and lottery-ticket bets rather than an expected move.
 - **Near-term levels (2026-10-30, largest short-dated expiry):** heavy put interest at **$450.00** may act as support and call interest at **$620.00** as resistance.
 - **Max pain:** $532.50 (+0.2% above spot). Prices sometimes drift toward this level into expiry.
@@ -103,11 +104,11 @@ As of **2026-10-26**, `AMD` is operating in **Regime 0**.
 | Realized volatility (10d) | 67.6% | How much the stock actually moved over the last 10 trading days (annualized) |
 | Realized volatility (20d) | 52.7% | How much the stock actually moved over the last 20 trading days (annualized) |
 | Realized volatility (60d) | 57.4% | How much the stock actually moved over the last 60 trading days (annualized) |
-| Front-week ATM implied vol (2026-11-02, 6d) | 63.0% | Movement priced into the nearest expiry |
-| ~30-day ATM implied vol (2026-11-27, 31d) | 60.1% | Movement priced in over the next month |
-| Implied / realized (20d) | 1.14x | Options are **fairly priced** vs. recent movement |
-| Term structure (front − 30d) | +2.8% | **Flat**: no distinct near-term event priced in |
-| Expected move by 2026-11-02 | ±$32.50 (±6.1%) | ATM straddle implies a range of **$498.78 – $563.78** |
+| Front-week ATM implied vol (2026-11-02, 6d) | 64.1% | Movement priced into the nearest expiry |
+| ~30-day ATM implied vol (2026-11-27, 31d) | 60.6% | Movement priced in over the next month |
+| Implied / realized (20d) | 1.15x | Options are **fairly priced** vs. recent movement |
+| Term structure (front − 30d) | +3.5% | **Inverted**: near-term stress or an upcoming event (e.g. earnings) is priced in |
+| Expected move by 2026-11-02 | ±$32.88 (±6.2%) | ATM straddle implies a range of **$498.40 – $564.15** |
 
 
 ### 6.2 Positioning by Strike Bucket
@@ -116,12 +117,12 @@ Open interest (contracts outstanding) and today's volume, grouped by how far the
 
 | Strike Bucket | Strike Range | Call OI | Put OI | Put/Call (OI) | Call Volume | Put Volume | Avg IV (OI-weighted) |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| **Far below spot** | < $478 | 56,523 | 247,878 | 4.39 | 1,951 | 29,629 | 148.5% |
-| **Below spot** | $478 – $515 | 14,338 | 54,346 | 3.79 | 6,397 | 26,875 | 68.0% |
-| **Near the money** | $515 – $547 | 46,731 | 33,144 | 0.71 | 35,181 | 19,484 | 71.3% |
-| **Above spot** | $547 – $584 | 46,323 | 30,400 | 0.66 | 38,826 | 3,836 | 65.4% |
-| **Far above spot** | > $584 | 219,072 | 22,897 | 0.10 | 39,028 | 2,599 | 96.1% |
-| **All strikes** | | **382,987** | **388,665** | **1.01** | **121,383** | **82,423** | |
+| **Far below spot** | < $478 | 56,523 | 247,878 | 4.39 | 1,951 | 29,407 | 148.7% |
+| **Below spot** | $478 – $515 | 14,338 | 54,346 | 3.79 | 6,397 | 23,192 | 68.0% |
+| **Near the money** | $515 – $547 | 46,731 | 33,144 | 0.71 | 35,181 | 19,484 | 71.7% |
+| **Above spot** | $547 – $584 | 46,323 | 30,400 | 0.66 | 37,567 | 3,559 | 65.6% |
+| **Far above spot** | > $584 | 219,072 | 22,897 | 0.10 | 39,028 | 2,599 | 95.6% |
+| **All strikes** | | **382,987** | **388,665** | **1.01** | **120,124** | **78,241** | |
 
 
 ### 6.3 Short-Dated Options (< 7 Days)
@@ -146,11 +147,11 @@ Open interest (contracts outstanding) and today's volume, grouped by how far the
 
 | Artifact Description | Path |
 | :--- | :--- |
-| **Markdown Analysis Report** | `generations/AMD_2025-10-27_2026-10-27_gaussian_m3/report.md` |
-| **Fitted Model & Scaler Bundle** | `generations/AMD_2025-10-27_2026-10-27_gaussian_m3/model.joblib` |
-| **Labeled Feature Dataset** | `generations/AMD_2025-10-27_2026-10-27_gaussian_m3/labeled.csv` |
-| **Regime Price Visualization** | `generations/AMD_2025-10-27_2026-10-27_gaussian_m3/plot.png` |
-| **Short-Dated Options Visualization** | `generations/AMD_2025-10-27_2026-10-27_gaussian_m3/options.png` |
+| **Markdown Analysis Report** | `generations/AMD_2025-10-27_2026-10-27_fat_m3_s2/report.md` |
+| **Fitted Model & Scaler Bundle** | `generations/AMD_2025-10-27_2026-10-27_fat_m3_s2/model.joblib` |
+| **Labeled Feature Dataset** | `generations/AMD_2025-10-27_2026-10-27_fat_m3_s2/labeled.csv` |
+| **Regime Price Visualization** | `generations/AMD_2025-10-27_2026-10-27_fat_m3_s2/plot.png` |
+| **Short-Dated Options Visualization** | `generations/AMD_2025-10-27_2026-10-27_fat_m3_s2/options.png` |
 
 ---
 *Report produced by Dirichlet Process Regime Engine.*

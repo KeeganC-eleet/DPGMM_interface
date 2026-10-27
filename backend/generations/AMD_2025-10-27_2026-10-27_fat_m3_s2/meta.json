@@ -1,17 +1,18 @@
 {
-  "id": "AMD_2025-10-27_2026-10-27_gaussian_m3",
+  "id": "AMD_2025-10-27_2026-10-27_fat_m3_s2",
   "ticker": "AMD",
   "start_date": "2025-10-27",
   "end_date": "2026-10-27",
   "max_regimes": 3,
-  "fat_tail": false,
-  "created_at": "2026-10-27T14:37:26",
+  "fat_tail": true,
+  "switch_cost": 2.0,
+  "created_at": "2026-10-27T14:58:27",
   "regimes": [
     0,
     1,
     2
   ],
-  "current_regime": 0,
+  "current_regime": 1,
   "observations": 1700,
   "legacy": false
 }
