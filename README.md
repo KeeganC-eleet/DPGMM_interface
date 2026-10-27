@@ -9,7 +9,7 @@ This quantitative finance project implements a Dirichlet Process Gaussian Mixtur
 ## Project Structure
 
 ```
-financial-modelling/
+DPGMM_interface/
   .venv/                 Python virtual environment (shared by the backend)
   backend/
     main.py              CLI entrypoint
