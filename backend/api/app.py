@@ -41,6 +41,7 @@ class GenerateRequest(BaseModel):
     end_date: date
     max_regimes: int = Field(default=3, ge=1, le=10)
     fat_tail: bool = False
+    switch_cost: float = Field(default=0.0, ge=0)
 
 @app.get("/api/health")
 def health():
@@ -71,6 +72,7 @@ def generate(req: GenerateRequest):
             end_date=req.end_date.isoformat(),
             max_regimes=req.max_regimes,
             fat_tail=req.fat_tail,
+            switch_cost=req.switch_cost,
         )
     except ValueError as e:
         raise HTTPException(422, str(e))

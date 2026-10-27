@@ -247,6 +247,7 @@ def write_markdown_report(
         f"| **Model Framework** | {model_framework} |",
         f"| **Prior Upper Bound Regimes** | `{max_regimes}` |",
         f"| **Weight Concentration Prior (γ)** | `{weight_prior}` |",
+        f"| **Regime Switching Cost** | `{getattr(model, 'switch_cost', 0.0):g}` nats |",
         f"| **Active Regimes Discovered** | **`{len(results_df['Regime'].unique()) if results_df is not None else 0}` regimes** |",
         f"| **Latest Trading Date** | `{latest_date_str}` |", f"| **Latest Asset Price** | `{latest_price_str}` |",
         f"| **Current Identified Regime** | **{_state_label(latest_regime)}** |", "", "---", "",

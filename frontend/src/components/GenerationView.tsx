@@ -73,7 +73,7 @@ export default function GenerationView({ generation, cached }: { generation: Gen
       <div className="generation-header">
         <h2>{meta.ticker}</h2>
         <span className="muted">
-          {meta.start_date} → {meta.end_date} · {meta.fat_tail ? "Student's t (PyMC)" : 'Gaussian DPGMM'} · max {meta.max_regimes} regimes
+          {meta.start_date} → {meta.end_date} · {meta.fat_tail ? "Student's t (PyMC)" : 'Gaussian DPGMM'} · max {meta.max_regimes} regimes{meta.switch_cost ? ` · switch cost ${meta.switch_cost}` : ''}
         </span>
         {cached && <span className="badge">Loaded from cache</span>}
         {meta.legacy && <span className="badge badge-muted">Legacy</span>}

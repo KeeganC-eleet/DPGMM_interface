@@ -78,7 +78,7 @@ export default function GeneratedTab({ refreshKey }: { refreshKey: number }) {
             </div>
             <div className="muted">{m.start_date} → {m.end_date}</div>
             <div className="muted">
-              {m.fat_tail ? "Student's t" : 'Gaussian'} · max {m.max_regimes} · {m.regimes.length} active
+              {m.fat_tail ? "Student's t" : 'Gaussian'} · max {m.max_regimes}{m.switch_cost ? ` · switch ${m.switch_cost}` : ''} · {m.regimes.length} active
             </div>
             {m.current_regime !== null && (
               <div className="card-current">

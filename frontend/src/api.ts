@@ -5,6 +5,7 @@ export interface GenerationMeta {
   end_date: string
   max_regimes: number
   fat_tail: boolean
+  switch_cost?: number // absent on generations made before switching costs existed
   created_at: string
   regimes: number[]
   current_regime: number | null
@@ -23,6 +24,7 @@ export interface GenerateRequest {
   end_date: string
   max_regimes: number
   fat_tail: boolean
+  switch_cost: number
 }
 
 async function request<T>(url: string, init?: RequestInit): Promise<T> {

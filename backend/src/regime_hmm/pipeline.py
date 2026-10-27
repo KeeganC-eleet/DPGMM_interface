@@ -29,6 +29,7 @@ def run_analysis(
     end_date: str,
     max_regimes: int = 3,
     fat_tail: bool = False,
+    switch_cost: float = 0.0,
     out_dir: str = "generations",
     base_dir: str = ".",
     interval: str = "1h",
@@ -74,10 +75,10 @@ def run_analysis(
     if fat_tail:
         from src.regime_hmm.model2 import RegimeDPGMMFat
         print(f"Initializing PyMC Student's t-Mixture Model with max_regimes = {max_regimes}...")
-        hmm_model = RegimeDPGMMFat(max_regimes=max_regimes, weight_prior=0.001)
+        hmm_model = RegimeDPGMMFat(max_regimes=max_regimes, weight_prior=0.001, switch_cost=switch_cost)
     else:
         print(f"Initializing scikit-learn DPGMM with max_regimes = {max_regimes}...")
-        hmm_model = RegimeDPGMM(max_regimes=max_regimes, weight_prior=0.001, random_state=42)
+        hmm_model = RegimeDPGMM(max_regimes=max_regimes, weight_prior=0.001, random_state=42, switch_cost=switch_cost)
 
     hmm_model.fit(features_df)
     regimes = hmm_model.predict(features_df)

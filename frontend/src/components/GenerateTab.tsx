@@ -20,6 +20,7 @@ export default function GenerateTab({ onGenerated }: { onGenerated: () => void }
   const [endDate, setEndDate] = useState(today)
   const [maxRegimes, setMaxRegimes] = useState(3)
   const [fatTail, setFatTail] = useState(false)
+  const [switchCost, setSwitchCost] = useState(0)
 
   const [loading, setLoading] = useState(false)
   const [elapsed, setElapsed] = useState(0)
@@ -46,6 +47,7 @@ export default function GenerateTab({ onGenerated }: { onGenerated: () => void }
         end_date: endDate,
         max_regimes: maxRegimes,
         fat_tail: fatTail,
+        switch_cost: switchCost,
       })
       setResult(res)
       if (!res.cached) onGenerated()
@@ -80,6 +82,10 @@ export default function GenerateTab({ onGenerated }: { onGenerated: () => void }
         <label>
           Max regimes
           <input type="number" min={1} max={10} value={maxRegimes} onChange={(e) => setMaxRegimes(Number(e.target.value))} required />
+        </label>
+        <label title="Penalty (nats) per regime change; higher values give fewer, longer regimes">
+          Switch cost
+          <input type="number" min={0} step={0.5} value={switchCost} onChange={(e) => setSwitchCost(Number(e.target.value))} required />
         </label>
         <label className="checkbox">
           <input type="checkbox" checked={fatTail} onChange={(e) => setFatTail(e.target.checked)} />

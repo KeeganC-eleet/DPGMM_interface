@@ -6,9 +6,10 @@ import pandas as pd
 from sklearn.preprocessing import StandardScaler
 import joblib
 from pathlib import Path
+from src.regime_hmm.model import decode_with_switch_cost
 
 class RegimeDPGMMFat:
-    def __init__(self, max_regimes: int = 5, weight_prior: float = 0.1, draws: int = 1000, tune: int = 1000):
+    def __init__(self, max_regimes: int = 5, weight_prior: float = 0.1, draws: int = 1000, tune: int = 1000, switch_cost: float = 0.0):
         """
         Initializes the Student's t-Mixture Model using PyMC.
         
@@ -17,11 +18,13 @@ class RegimeDPGMMFat:
             weight_prior: Alpha for the Dirichlet prior.
             draws: Number of MCMC samples to draw.
             tune: Number of tuning steps for the NUTS sampler.
+            switch_cost: Penalty (nats) for changing regime between consecutive points.
         """
         self.max_regimes = max_regimes
         self.weight_prior = weight_prior
         self.draws = draws
         self.tune = tune
+        self.switch_cost = switch_cost
         self.scaler = StandardScaler()
         self.trace_ = None
         self.model_ = None
@@ -105,6 +108,6 @@ class RegimeDPGMMFat:
         
         # Simplified prediction: Assign data points to the closest regime mean mathematically
         from scipy.spatial.distance import cdist
-        distances = cdist(scaled_features, mu_mean, metric='euclidean')
-        
-        return np.argmin(distances, axis=1)
+        # Half squared distance = unit-variance Gaussian negative log-likelihood (nats), same argmin as before
+        costs = 0.5 * cdist(scaled_features, mu_mean, metric='sqeuclidean')
+        return decode_with_switch_cost(costs, self.switch_cost)

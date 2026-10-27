@@ -5,9 +5,31 @@ from sklearn.preprocessing import StandardScaler
 import joblib
 from pathlib import Path
 
+def decode_with_switch_cost(costs: np.ndarray, switch_cost: float) -> np.ndarray:
+    """
+    Viterbi decoding over a (T, K) per-point cost matrix: returns the regime path minimising
+    total cost plus switch_cost for every change of regime between consecutive points.
+    With switch_cost=0 this reduces to a per-point argmin.
+    """
+    T, K = costs.shape
+    penalty = switch_cost * (1 - np.eye(K))
+    acc = costs[0].copy()
+    back = np.zeros((T, K), dtype=int)
+    for t in range(1, T):
+        total = acc[:, None] + penalty  # total[i, j]: arrive in j from i
+        back[t] = total.argmin(axis=0)
+        acc = total.min(axis=0) + costs[t]
+
+    path = np.empty(T, dtype=int)
+    path[-1] = acc.argmin()
+    for t in range(T - 1, 0, -1):
+        path[t - 1] = back[t, path[t]]
+    return path
+
 class RegimeDPGMM:
-    def __init__(self, max_regimes: int = 10, weight_prior: float = 0.001, random_state: int = 42):
+    def __init__(self, max_regimes: int = 10, weight_prior: float = 0.001, random_state: int = 42, switch_cost: float = 0.0):
         self.max_regimes = max_regimes
+        self.switch_cost = switch_cost
         self.scaler = StandardScaler()
         self.model = BayesianGaussianMixture(
             n_components=max_regimes,
@@ -42,7 +64,9 @@ class RegimeDPGMM:
             raise ValueError("Model must be fitted before predicting.")
             
         scaled_features = self.scaler.transform(features.values)
-        states = self.model.predict(scaled_features)
+        # Cost is the negative log posterior responsibility (nats)
+        neg_log_proba = -np.log(self.model.predict_proba(scaled_features) + 1e-300)
+        states = decode_with_switch_cost(neg_log_proba, self.switch_cost)
         return pd.Series(states, index=features.index, name="Regime")
         
     def predict_proba(self, features: pd.DataFrame) -> pd.DataFrame:

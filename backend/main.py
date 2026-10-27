@@ -28,6 +28,7 @@ def main(max_regimes: int = None, ticker: str = None, start_date: str = None, en
         parser.add_argument("--max_regimes", "-m", type=int, default=None, help="Max regimes")
         # NEW: Flag to toggle the PyMC Fat-Tailed Model
         parser.add_argument("--fat_tail", "-f", action="store_true", help="Use PyMC Student's t-Mixture Model")
+        parser.add_argument("--switch_cost", "-c", type=float, default=0.0, help="Penalty (nats) per regime switch")
         parser.add_argument("--start", "-s", type=str, default=None, help="Start date (YYYY-MM-DD)")
         parser.add_argument("--end", "-e", type=str, default=None, help="End date (YYYY-MM-DD)")
         
@@ -38,9 +39,11 @@ def main(max_regimes: int = None, ticker: str = None, start_date: str = None, en
         if ticker is None:
             ticker = flag_args.ticker if flag_args.ticker is not None else (cli_ticker if cli_ticker is not None else "AAPL")
         use_fat_tail = flag_args.fat_tail
+        switch_cost = flag_args.switch_cost
         flag_start, flag_end = flag_args.start, flag_args.end
     else:
         use_fat_tail = False
+        switch_cost = 0.0
         flag_start = flag_end = None
 
     # --- Configuration ---
@@ -56,6 +59,7 @@ def main(max_regimes: int = None, ticker: str = None, start_date: str = None, en
         end_date=end_date,
         max_regimes=max_regimes,
         fat_tail=use_fat_tail,
+        switch_cost=switch_cost,
     )
     status = "Loaded cached generation" if cached else "Generated"
     print(f"{status}: {store.GENERATIONS_DIR / generation['meta']['id']}")

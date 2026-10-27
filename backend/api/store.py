@@ -28,9 +28,11 @@ TICKER_RE = re.compile(r"^[A-Z0-9.\-^=]{1,15}$")
 _locks: dict[str, threading.Lock] = {}
 _locks_guard = threading.Lock()
 
-def make_id(ticker: str, start_date: str, end_date: str, fat_tail: bool, max_regimes: int) -> str:
+def make_id(ticker: str, start_date: str, end_date: str, fat_tail: bool, max_regimes: int, switch_cost: float = 0.0) -> str:
     model = "fat" if fat_tail else "gaussian"
-    return f"{ticker}_{start_date}_{end_date}_{model}_m{max_regimes}"
+    # Suffix only when set, so ids of existing zero-cost generations stay valid
+    suffix = f"_s{switch_cost:g}" if switch_cost else ""
+    return f"{ticker}_{start_date}_{end_date}_{model}_m{max_regimes}{suffix}"
 
 def _gen_dir(gen_id: str) -> Optional[Path]:
     """Resolves a generation directory, rejecting ids that escape the store."""
@@ -79,9 +81,9 @@ def list_generations() -> list[dict]:
         metas.append(json.loads(meta_file.read_text(encoding="utf-8")))
     return sorted(metas, key=lambda m: m["created_at"], reverse=True)
 
-def generate(ticker: str, start_date: str, end_date: str, max_regimes: int = 3, fat_tail: bool = False) -> tuple[dict, bool]:
+def generate(ticker: str, start_date: str, end_date: str, max_regimes: int = 3, fat_tail: bool = False, switch_cost: float = 0.0) -> tuple[dict, bool]:
     """Returns (generation, cached). Runs the pipeline only if no matching generation exists."""
-    gen_id = make_id(ticker, start_date, end_date, fat_tail, max_regimes)
+    gen_id = make_id(ticker, start_date, end_date, fat_tail, max_regimes, switch_cost)
 
     # Serialize identical requests so a double-click can't run the model twice
     with _lock_for(gen_id):
@@ -96,7 +98,7 @@ def generate(ticker: str, start_date: str, end_date: str, max_regimes: int = 3, 
         try:
             summary = run_analysis(
                 ticker=ticker, start_date=start_date, end_date=end_date,
-                max_regimes=max_regimes, fat_tail=fat_tail,
+                max_regimes=max_regimes, fat_tail=fat_tail, switch_cost=switch_cost,
                 out_dir=str(tmp_dir), base_dir=str(BACKEND_DIR),
             )
             meta = {
@@ -106,6 +108,7 @@ def generate(ticker: str, start_date: str, end_date: str, max_regimes: int = 3, 
                 "end_date": end_date,
                 "max_regimes": max_regimes,
                 "fat_tail": fat_tail,
+                "switch_cost": switch_cost,
                 "created_at": datetime.now().isoformat(timespec="seconds"),
                 "regimes": summary["regimes"],
                 "current_regime": summary["current_regime"],
