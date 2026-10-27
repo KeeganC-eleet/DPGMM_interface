@@ -1,0 +1,20 @@
+{
+  "id": "NVDA_2025-10-26_2026-10-26_gaussian_m6",
+  "ticker": "NVDA",
+  "start_date": "2025-10-26",
+  "end_date": "2026-10-26",
+  "max_regimes": 6,
+  "fat_tail": false,
+  "created_at": "2026-10-26T22:30:44",
+  "regimes": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "current_regime": 1,
+  "observations": 1693,
+  "legacy": false
+}

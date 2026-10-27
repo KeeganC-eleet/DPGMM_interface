@@ -1,0 +1,40 @@
+# yfinance.download() Parameters (Key-Value Pairs)
+
+
+
+When calling `yf.download()`, you can pass several arguments to customize the data you pull. Here are the primary key-value pairs available:
+
+
+
+*   **tickers** (str or list): The ticker symbol(s) to download. Can be a single string (e.g., "AAPL") or a list of strings (e.g., ["AAPL", "MSFT"]).
+
+*   **start** (str): The start date for the data pull in "YYYY-MM-DD" format.
+
+*   **end** (str): The end date for the data pull in "YYYY-MM-DD" format. (Exclusive bounds).
+
+*   **period** (str): Alternatively used instead of start/end. Valid values are '1d', '5d', '1mo', '3mo', '6mo', '1y', '2y', '5y', '10y', 'ytd', 'max'.
+
+*   **interval** (str): The granularity of the data. Valid values are '1m', '2m', '5m', '15m', '30m', '60m', '90m', '1h', '1d', '5d', '1wk', '1mo', '3mo'. Default is '1d'.
+    Yahoo Finance restricts historical intraday data. 1-minute data (1m) is only available for the last 7 days. Intervals between 2m and 1h are generally only available for the last 730 days (about 2 years). Daily data (1d) or higher is available for the entire history of the ticker.
+
+*   **group_by** (str): How to group data when downloading multiple tickers. Valid values are 'column' (default) or 'ticker'.
+
+*   **auto_adjust** (bool): Adjusts all OHLC (Open/High/Low/Close) prices for splits and dividends automatically. Default is True.
+
+*   **prepost** (bool): If True, includes Pre-market and Post-market trading data in the results. Default is False.
+
+*   **threads** (bool or int): How many threads to use for mass downloading. True enables multi-threading. You can also pass an integer for the exact number of threads. Default is True.
+
+*   **proxy** (str): Optional. A proxy server URL if you are behind a firewall or trying to avoid rate limits.
+
+*   **keepna** (bool): If True, keeps rows with missing values (NaN) instead of dropping them. Default is False.
+
+*   **timeout** (float): Stops waiting for a response after a given number of seconds.
+
+*   **ignore_tz** (bool): If True, ignores timezones when aligning data. Default is False.
+
+
+
+Example Usage:
+
+yf.download(tickers=["SPY", "QQQ"], start="2024-01-01", end="2025-01-01", interval="1d", auto_adjust=True)

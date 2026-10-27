@@ -1,0 +1,18 @@
+{
+  "id": "SPY_2025-01-02_2026-10-26_gaussian_m4",
+  "ticker": "SPY",
+  "start_date": "2025-01-02",
+  "end_date": "2026-10-26",
+  "max_regimes": 4,
+  "fat_tail": false,
+  "created_at": "2026-10-26T21:16:17",
+  "regimes": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "current_regime": 1,
+  "observations": 3117,
+  "legacy": false
+}
